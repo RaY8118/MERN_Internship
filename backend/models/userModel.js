@@ -4,11 +4,12 @@ const userSchema = mongoose.Schema(
     {
         email: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         password: {
             type: String,
-            required: true
+            required: true,
         },
         role: {
             type: String,
@@ -17,7 +18,7 @@ const userSchema = mongoose.Schema(
         }
     },
     {
-        timeStamps: true,
+        timestamps: true,
     }
 )
 

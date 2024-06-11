@@ -6,7 +6,8 @@ const userRoutes = require('./routes/userRoutes')
 const userModel = require('./models/userModel')
 connect();
 
-// app.use("/api/users", require("./routes/userRoutes"));
+app.use(express.json());
+app.use("/api/users", require("./routes/userRoutes"));
 // app.get('/', (req, res) => {
 //     res.send("heloow")
 // })
