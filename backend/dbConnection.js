@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 
 const connection = async () => {
     try {
-        const conn = await mongoose.connect("mongodb+srv://admin:admin@internship.u9knsrp.mongodb.net/backend?retryWrites=true&w=majority&appName=Internship");
+        const conn = await mongoose.connect("mongodb://localhost:27017/backend");
         console.log(conn.connection.name)
     } catch (err) {
         console.log(err)

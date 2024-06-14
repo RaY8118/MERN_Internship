@@ -1,52 +1,38 @@
-const express = require('express')
-const app = express()
-const port = 3000
-const connect = require('./dbConnection')
-const userRoutes = require('./routes/userRoutes')
-const userModel = require('./models/userModel')
+const express = require('express');
+const cors = require('cors');
+const connect = require('./dbConnection');
+const userModel = require('./models/userModel');
+
+const app = express();
+const port = 4000;
+
+// Connect to the database
 connect();
 
+// Middleware to enable CORS
+app.use(cors({
+    origin: 'http://localhost:3000', // Allow requests from this origin
+    methods: ['GET', 'POST'], // Allow these HTTP methods
+    credentials: true, // Allow cookies to be sent with requests
+}));
+
+// Middleware to parse JSON bodies
 app.use(express.json());
+
+// Define your routes
 app.use("/api/users", require("./routes/userRoutes"));
-// app.get('/', (req, res) => {
-//     res.send("heloow")
-// })
 
-// app.post('/create', (req, res) => {
-//     console.log(req)
-//     res.send("Post req received")
-// })
-
-// app.get('/get', (req, res) => {
-//     res.send('Get req recieved')
-// })
-
-
+// Example route
 app.get("/getData", async (req, res) => {
-    const data = await userModel.find();
-    res.json(data)
+    try {
+        const data = await userModel.find();
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
-app.post("/getData", async (req, res) => {
-    console.log(req.body);
-    try {
-        const user = new userModel({
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role
-        });
-        const saveuser = await user.save();
-        res.status(201).sendStatus(saveuser);
-    } catch (err) {
-        res.status(500).send(err);
-    }
-
-})
-
-
-
+// Start the server
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
-
-
+    console.log(`Example app listening on port ${port}`);
+});
