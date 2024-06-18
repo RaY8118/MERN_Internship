@@ -5,7 +5,8 @@ const userModel = require('./models/userModel');
 
 const app = express();
 const port = 4000;
-
+const dotenv = require('dotenv');
+dotenv.config({ path: "./config/config.env" });
 // Connect to the database
 connect();
 
